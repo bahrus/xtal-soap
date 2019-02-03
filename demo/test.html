@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const body = `<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <FahrenheitToCelsius xmlns="https://www.w3schools.com/xml/">
+      <Fahrenheit>46</Fahrenheit>
+    </FahrenheitToCelsius>
+  </soap:Body>
+</soap:Envelope>`;
+        //const headers = new Headers();
+        //headers.append('Host', 'www.w3schools.com');
+        //headers.append('Content-Type', 'text/xml; charset=utf-8');
+        //headers.append('Content-Length', body.length);
+       // headers.append('Access-Control-Allow-Origin', '*');
+        fetch('https://cors-anywhere.herokuapp.com/https://www.w3schools.com/xml/tempconvert.asmx', {
+            method: 'POST',
+            headers:{
+                Host: 'www.w3schools.com',
+                'Content-Type': 'text/xml; charset=utf-8',
+                'Content-Length': body.length,
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: body,
+            //mode: "cors",
+        }).then(resp =>{
+            resp.text().then(txt =>{
+                console.log(txt);
+            })
+        })
+    </script>
+</body>
+</html>
