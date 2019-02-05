@@ -5,7 +5,7 @@ import {EventSwitchContext} from 'event-switch/event-switch.d.js';
 import {XtalElement} from 'xtal-element/xtal-element.js';
 
 const endpoint = 'endpoint';
-export abstract class XtalSoapElement<TReq> extends XtalElement{
+export abstract class XtalSoapElement extends XtalElement{
     abstract get messageBuilder(): (t: this) => string;
     abstract get eventSwitchContext(): EventSwitchContext;
     abstract get responseBuilder(): (t: this) => string;    

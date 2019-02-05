@@ -5,16 +5,13 @@ import {update} from 'trans-render/update.js';
 import { RenderContext } from 'trans-render/init.d.js';
 import {addEventListeners} from 'event-switch/event-switch.js';
 import {EventSwitchContext} from 'event-switch/event-switch.d.js';
-export interface TemperatureValues{
-    Fahrenheit: number,
-    Celsius: number;
-}
+
 const mainTemplate = createTemplate(/* html */`
 <input name="Fahrenheit">
 <button>Convert</button>
 <div role="answer"></div>
 `);
-export class TempConverter extends XtalSoapElement<TemperatureValues>{
+export class TempConverter extends XtalSoapElement{
     _eventSwitchContext  = {
         eventManager: addEventListeners,
         eventRules:{
