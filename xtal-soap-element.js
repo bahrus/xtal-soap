@@ -58,9 +58,10 @@ export class XtalSoapElement extends XtalElement {
             body: body,
         }).then(resp => {
             resp.text().then(txt => {
-                const tmpl = document.createElement('template');
-                tmpl.innerHTML = txt;
-                this.value = tmpl;
+                //const tmpl = document.createElement('textarea');
+                //tmpl.innerHTML = txt;
+                const dp = new DOMParser();
+                this.value = dp.parseFromString(txt, 'application/xml');
             });
         });
         //this.value = tmpl;
