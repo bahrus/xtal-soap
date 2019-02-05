@@ -49,13 +49,16 @@ export abstract class XtalSoapElement extends XtalElement{
     }
 
     connectedCallback(){
+        this._upgradeProperties(['endpoint']);
+        super.connectedCallback();
         this.onPropsChange();
     }
 
     abstract get renderContext(): RenderContext;
-    abstract get update(): (ctx: RenderContext, target: HTMLElement | DocumentFragment, options?: RenderOptions | undefined) => UpdateContext: 
+    abstract get update(): (ctx: RenderContext, target: HTMLElement | DocumentFragment, options?: RenderOptions | undefined) => UpdateContext; 
 
     onPropsChange(){
+        if(!super.onPropsChange()) return false;
         const rc = this.renderContext;  
         const esc = this.eventSwitchContext;
         if(this.mainTemplate !== undefined){
