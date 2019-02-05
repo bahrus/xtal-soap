@@ -1,5 +1,4 @@
 import { XtalElement } from 'xtal-element/xtal-element.js';
-import { update } from 'trans-render/update.js';
 const endpoint = 'endpoint';
 export class XtalSoapElement extends XtalElement {
     constructor() {
@@ -54,7 +53,7 @@ export class XtalSoapElement extends XtalElement {
                 }
                 else {
                     rc.init(this.mainTemplate, rc, this.root, this.renderOptions);
-                    rc.update = update;
+                    rc.update = this.update;
                 }
             }
             else {
@@ -69,7 +68,6 @@ export class XtalSoapElement extends XtalElement {
         const body = this.messageBuilder(this);
         const headers = new Headers({
             'Content-Type': 'text/xml; charset=utf-8',
-            // 'Content-Length': body.length,
             'Access-Control-Allow-Origin': '*',
         });
         fetch(this._endpoint, {

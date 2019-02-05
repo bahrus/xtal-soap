@@ -1,11 +1,11 @@
-import {XtallatX} from 'xtal-latx/xtal-latx.js';
-import {RenderContext} from 'trans-render/init.d.js';
+//import {XtallatX} from 'xtal-latx/xtal-latx.js';
+import {RenderContext, RenderOptions} from 'trans-render/init.d.js';
+import {UpdateContext} from 'trans-render/update.d.js';
 import {EventSwitchContext} from 'event-switch/event-switch.d.js';
 import {XtalElement} from 'xtal-element/xtal-element.js';
-import {update} from 'trans-render/update.js';
+
 const endpoint = 'endpoint';
 export abstract class XtalSoapElement<TReq> extends XtalElement{
-    //abstract get mainTemplate(): HTMLTemplateElement;
     abstract get messageBuilder(): (t: this) => string;
     abstract get eventSwitchContext(): EventSwitchContext;
     abstract get responseBuilder(): (t: this) => string;    
@@ -53,6 +53,7 @@ export abstract class XtalSoapElement<TReq> extends XtalElement{
     }
 
     abstract get renderContext(): RenderContext;
+    abstract get update(): (ctx: RenderContext, target: HTMLElement | DocumentFragment, options?: RenderOptions | undefined) => UpdateContext: 
 
     onPropsChange(){
         const rc = this.renderContext;  
@@ -66,7 +67,7 @@ export abstract class XtalSoapElement<TReq> extends XtalElement{
                     rc.update!(rc, this.root);
                 }else{
                     rc.init(this.mainTemplate, rc, this.root, this.renderOptions);
-                    rc.update = update;
+                    rc.update = this.update;
                 }
                 
             }else{
@@ -82,7 +83,6 @@ export abstract class XtalSoapElement<TReq> extends XtalElement{
         const body = this.messageBuilder(this);
         const headers = new Headers({
             'Content-Type': 'text/xml; charset=utf-8',
-            // 'Content-Length': body.length,
             'Access-Control-Allow-Origin': '*',
 
         });

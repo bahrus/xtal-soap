@@ -1,7 +1,7 @@
 import {XtalSoapElement} from '../xtal-soap-element.js';
 import {createTemplate} from 'xtal-element/utils.js';
 import {init} from 'trans-render/init.js';
-
+import {update} from 'trans-render/update.js';
 import { RenderContext } from 'trans-render/init.d.js';
 import {addEventListeners} from 'event-switch/event-switch.js';
 import {EventSwitchContext} from 'event-switch/event-switch.d.js';
@@ -52,7 +52,7 @@ export class TempConverter extends XtalSoapElement<TemperatureValues>{
     }
     get ready(){return true;}
 
-
+    get update(){return update;}
 
     get mainTemplate(){return mainTemplate;}
 
