@@ -1,9 +1,10 @@
 import {XtallatX} from 'xtal-latx/xtal-latx.js';
 import {RenderContext} from 'trans-render/init.d.js';
 import {EventSwitchContext} from 'event-switch/event-switch.d.js';
+import {XtalElement} from 'xtal-element/xtal-element.js';
 
 const endPoint = 'end-point';
-export abstract class XtalSoapElement<TReq> extends XtallatX(HTMLElement){
+export abstract class XtalSoapElement<TReq> extends XtalElement{
     abstract get requestTemplate(): HTMLTemplateElement;
     abstract get mainTemplate(): HTMLTemplateElement;
     abstract get messageFormatContext(): RenderContext;
@@ -31,6 +32,29 @@ export abstract class XtalSoapElement<TReq> extends XtallatX(HTMLElement){
     }
     attributeChangedCallback(){
         throw 'not implemented';
+    }
+
+    connectedCallback(){
+        this.onPropsChange();
+    }
+
+    abstract get renderContext(): RenderContext;
+
+    onPropsChange(){
+        const rc = this.renderContext;  
+        const esc = this.eventSwitchContext;
+        if(this.mainTemplate !== undefined){
+            if(esc && esc.eventManager !== undefined){
+                esc.eventManager(this.root, esc);
+            }
+            if(rc && rc.init !== undefined){
+                rc.init(this.mainTemplate, rc, this.root, this.renderOptions);
+            }else{
+                this.root.appendChild(this.mainTemplate.content.cloneNode(true));
+            }
+            this._initialized = true;
+        }
+        return true;
     }
 
     postMessage(){

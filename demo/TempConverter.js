@@ -31,16 +31,27 @@ export class TempConverter extends XtalSoapElement {
                 Fahrenheit: x => 46
             }
         };
+        this._renderContext = {
+            init: init,
+            Transform: {
+            //div: x=> this.viewModel
+            }
+        };
     }
     get eventSwitchContext() {
         return this._eventSwitchContext;
     }
+    get ready() { return true; }
     get messageFormatContext() {
         return this._messageFormatContext;
     }
     get mainTemplate() { return mainTemplate; }
     get requestTemplate() { return requestTemplate; }
+    get renderContext() {
+        return this._renderContext;
+    }
     convert() {
-        debugger;
+        this.postMessage();
     }
 }
+customElements.define('temp-converter', TempConverter);

@@ -33,6 +33,7 @@ export class TempConverter extends XtalSoapElement<TemperatureValues>{
     get eventSwitchContext() {
         return this._eventSwitchContext;
     }
+    get ready(){return true;}
 
     _messageFormatContext = {
         init: init,
@@ -48,7 +49,18 @@ export class TempConverter extends XtalSoapElement<TemperatureValues>{
 
     get requestTemplate(){return requestTemplate;}
 
+    _renderContext = {
+        init: init,
+        Transform:{
+            //div: x=> this.viewModel
+        }
+    } as RenderContext;
+    get renderContext(){
+        return this._renderContext;
+    }
+
     convert(){
-        debugger;
+        this.postMessage();
     }
 }
+customElements.define('temp-converter', TempConverter);
