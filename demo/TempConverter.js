@@ -5,6 +5,7 @@ import { addEventListeners } from 'event-switch/event-switch.js';
 const mainTemplate = createTemplate(/* html */ `
 <input name="Fahrenheit">
 <button>Convert</button>
+<div role="answer"></div>
 `);
 export class TempConverter extends XtalSoapElement {
     constructor() {
@@ -24,7 +25,7 @@ export class TempConverter extends XtalSoapElement {
         this._renderContext = {
             init: init,
             Transform: {
-            //div: x=> this.viewModel
+                '[role="answer"]': x => this._response
             }
         };
     }

@@ -2,7 +2,7 @@ import {XtallatX} from 'xtal-latx/xtal-latx.js';
 import {RenderContext} from 'trans-render/init.d.js';
 import {EventSwitchContext} from 'event-switch/event-switch.d.js';
 import {XtalElement} from 'xtal-element/xtal-element.js';
-
+import {update} from 'trans-render/update.js';
 const endpoint = 'endpoint';
 export abstract class XtalSoapElement<TReq> extends XtalElement{
     //abstract get mainTemplate(): HTMLTemplateElement;
@@ -19,13 +19,14 @@ export abstract class XtalSoapElement<TReq> extends XtalElement{
         this.setResponse(this.responseBuilder(this));
     }
 
-    _response!: String;
+    _response: String = '';
     get response(){
         return this._response;
     }
     setResponse(nv: String){
         this._response = nv;
         this.de('response', {response: nv});
+        this.onPropsChange();
     }
 
     _endpoint!: string;
@@ -61,7 +62,13 @@ export abstract class XtalSoapElement<TReq> extends XtalElement{
                 esc.eventManager(this.root, esc);
             }
             if(rc && rc.init !== undefined){
-                rc.init(this.mainTemplate, rc, this.root, this.renderOptions);
+                if(this._initialized){
+                    rc.update!(rc, this.root);
+                }else{
+                    rc.init(this.mainTemplate, rc, this.root, this.renderOptions);
+                    rc.update = update;
+                }
+                
             }else{
                 this.root.appendChild(this.mainTemplate.content.cloneNode(true));
             }

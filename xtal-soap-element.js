@@ -1,6 +1,11 @@
 import { XtalElement } from 'xtal-element/xtal-element.js';
+import { update } from 'trans-render/update.js';
 const endpoint = 'endpoint';
 export class XtalSoapElement extends XtalElement {
+    constructor() {
+        super(...arguments);
+        this._response = '';
+    }
     get value() {
         return this._value;
     }
@@ -15,6 +20,7 @@ export class XtalSoapElement extends XtalElement {
     setResponse(nv) {
         this._response = nv;
         this.de('response', { response: nv });
+        this.onPropsChange();
     }
     get endpoint() {
         return this._endpoint;
@@ -43,7 +49,13 @@ export class XtalSoapElement extends XtalElement {
                 esc.eventManager(this.root, esc);
             }
             if (rc && rc.init !== undefined) {
-                rc.init(this.mainTemplate, rc, this.root, this.renderOptions);
+                if (this._initialized) {
+                    rc.update(rc, this.root);
+                }
+                else {
+                    rc.init(this.mainTemplate, rc, this.root, this.renderOptions);
+                    rc.update = update;
+                }
             }
             else {
                 this.root.appendChild(this.mainTemplate.content.cloneNode(true));

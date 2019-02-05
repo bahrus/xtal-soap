@@ -1,6 +1,7 @@
 import {XtalSoapElement} from '../xtal-soap-element.js';
 import {createTemplate} from 'xtal-element/utils.js';
 import {init} from 'trans-render/init.js';
+
 import { RenderContext } from 'trans-render/init.d.js';
 import {addEventListeners} from 'event-switch/event-switch.js';
 import {EventSwitchContext} from 'event-switch/event-switch.d.js';
@@ -11,6 +12,7 @@ export interface TemperatureValues{
 const mainTemplate = createTemplate(/* html */`
 <input name="Fahrenheit">
 <button>Convert</button>
+<div role="answer"></div>
 `);
 export class TempConverter extends XtalSoapElement<TemperatureValues>{
     _eventSwitchContext  = {
@@ -58,7 +60,7 @@ export class TempConverter extends XtalSoapElement<TemperatureValues>{
     _renderContext = {
         init: init,
         Transform:{
-            //div: x=> this.viewModel
+            '[role="answer"]': x=> this._response
         }
     } as RenderContext;
     get renderContext(){
