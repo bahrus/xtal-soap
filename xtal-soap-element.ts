@@ -5,19 +5,27 @@ import {XtalElement} from 'xtal-element/xtal-element.js';
 
 const endpoint = 'endpoint';
 export abstract class XtalSoapElement<TReq> extends XtalElement{
-    //abstract get requestTemplate(): HTMLTemplateElement;
-    abstract get mainTemplate(): HTMLTemplateElement;
-    //abstract get messageFormatContext(): RenderContext;
+    //abstract get mainTemplate(): HTMLTemplateElement;
     abstract get messageBuilder(): (t: this) => string;
     abstract get eventSwitchContext(): EventSwitchContext;
-    
+    abstract get responseBuilder(): (t: this) => string;    
     _value!: Document;
     get value(){
         return this._value;
     }
-    set value(nv){
+    setValue(nv: Document){
         this._value = nv;
         this.de('value', {value: nv});
+        this.setResponse(this.responseBuilder(this));
+    }
+
+    _response!: String;
+    get response(){
+        return this._response;
+    }
+    setResponse(nv: String){
+        this._response = nv;
+        this.de('response', {response: nv});
     }
 
     _endpoint!: string;
@@ -80,10 +88,9 @@ export abstract class XtalSoapElement<TReq> extends XtalElement{
                 //const tmpl = document.createElement('textarea');
                 //tmpl.innerHTML = txt;
                 const dp = new DOMParser();
-                this.value = dp.parseFromString(txt, 'application/xml');
+                this.setValue(dp.parseFromString(txt, 'application/xml'));
             })
         })
-        //this.value = tmpl;
     }
 
 }

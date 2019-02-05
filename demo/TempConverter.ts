@@ -32,11 +32,17 @@ export class TempConverter extends XtalSoapElement<TemperatureValues>{
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 <soap:Body>
     <FahrenheitToCelsius xmlns="https://www.w3schools.com/xml/">
-    <Fahrenheit>47</Fahrenheit>
+    <Fahrenheit>${this.root.querySelector('input')!.value}</Fahrenheit>
     </FahrenheitToCelsius>
 </soap:Body>
 </soap:Envelope>
 `
+    }
+
+    get responseBuilder(){
+        return (t: this) => /* html */`
+            Celsius: ${t._value.querySelector('FahrenheitToCelsiusResult')!.textContent}
+        `;
     }
 
     get eventSwitchContext() {
@@ -48,7 +54,6 @@ export class TempConverter extends XtalSoapElement<TemperatureValues>{
 
     get mainTemplate(){return mainTemplate;}
 
-    // get requestTemplate(){return requestTemplate;}
 
     _renderContext = {
         init: init,

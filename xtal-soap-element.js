@@ -4,9 +4,17 @@ export class XtalSoapElement extends XtalElement {
     get value() {
         return this._value;
     }
-    set value(nv) {
+    setValue(nv) {
         this._value = nv;
         this.de('value', { value: nv });
+        this.setResponse(this.responseBuilder(this));
+    }
+    get response() {
+        return this._response;
+    }
+    setResponse(nv) {
+        this._response = nv;
+        this.de('response', { response: nv });
     }
     get endpoint() {
         return this._endpoint;
@@ -61,9 +69,8 @@ export class XtalSoapElement extends XtalElement {
                 //const tmpl = document.createElement('textarea');
                 //tmpl.innerHTML = txt;
                 const dp = new DOMParser();
-                this.value = dp.parseFromString(txt, 'application/xml');
+                this.setValue(dp.parseFromString(txt, 'application/xml'));
             });
         });
-        //this.value = tmpl;
     }
 }

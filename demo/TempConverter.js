@@ -21,7 +21,6 @@ export class TempConverter extends XtalSoapElement {
                 },
             }
         };
-        // get requestTemplate(){return requestTemplate;}
         this._renderContext = {
             init: init,
             Transform: {
@@ -34,11 +33,16 @@ export class TempConverter extends XtalSoapElement {
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 <soap:Body>
     <FahrenheitToCelsius xmlns="https://www.w3schools.com/xml/">
-    <Fahrenheit>47</Fahrenheit>
+    <Fahrenheit>${this.root.querySelector('input').value}</Fahrenheit>
     </FahrenheitToCelsius>
 </soap:Body>
 </soap:Envelope>
 `;
+    }
+    get responseBuilder() {
+        return (t) => /* html */ `
+            Celsius: ${t._value.querySelector('FahrenheitToCelsiusResult').textContent}
+        `;
     }
     get eventSwitchContext() {
         return this._eventSwitchContext;
