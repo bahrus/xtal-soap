@@ -26,7 +26,14 @@ export class TempConverter extends XtalSoapElement<TemperatureValues>{
     _eventSwitchContext  = {
         eventManager: addEventListeners,
         eventRules:{
-            'click': e => this.convert(),
+            click:{
+                route:{
+                    button: {
+                        action: e => this.convert(),
+                    }
+                }
+                
+            },
         }
     } as EventSwitchContext;
 

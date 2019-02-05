@@ -22,7 +22,13 @@ export class TempConverter extends XtalSoapElement {
         this._eventSwitchContext = {
             eventManager: addEventListeners,
             eventRules: {
-                'click': e => this.convert(),
+                click: {
+                    route: {
+                        button: {
+                            action: e => this.convert(),
+                        }
+                    }
+                },
             }
         };
         this._messageFormatContext = {
