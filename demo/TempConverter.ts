@@ -8,16 +8,6 @@ export interface TemperatureValues{
     Fahrenheit: number,
     Celsius: number;
 }
-const requestTemplate = createTemplate(/* xml */`
-<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <FahrenheitToCelsius xmlns="https://www.w3schools.com/xml/">
-      <Fahrenheit></Fahrenheit>
-    </FahrenheitToCelsius>
-  </soap:Body>
-</soap:Envelope>
-`);
 const mainTemplate = createTemplate(/* html */`
 <input name="Fahrenheit">
 <button>Convert</button>
@@ -37,24 +27,28 @@ export class TempConverter extends XtalSoapElement<TemperatureValues>{
         }
     } as EventSwitchContext;
 
+    get messageBuilder(){
+        return (t: this) => /* xml */`<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+<soap:Body>
+    <FahrenheitToCelsius xmlns="https://www.w3schools.com/xml/">
+    <Fahrenheit>47</Fahrenheit>
+    </FahrenheitToCelsius>
+</soap:Body>
+</soap:Envelope>
+`
+    }
+
     get eventSwitchContext() {
         return this._eventSwitchContext;
     }
     get ready(){return true;}
 
-    _messageFormatContext = {
-        init: init,
-        Transform: {
-            Fahrenheit: x => 46
-        }
-    } as RenderContext;
-    get messageFormatContext(){
-        return this._messageFormatContext;
-    }
+
 
     get mainTemplate(){return mainTemplate;}
 
-    get requestTemplate(){return requestTemplate;}
+    // get requestTemplate(){return requestTemplate;}
 
     _renderContext = {
         init: init,

@@ -1,5 +1,5 @@
 import { XtalElement } from 'xtal-element/xtal-element.js';
-const endPoint = 'end-point';
+const endpoint = 'endpoint';
 export class XtalSoapElement extends XtalElement {
     get value() {
         return this._value;
@@ -8,17 +8,21 @@ export class XtalSoapElement extends XtalElement {
         this._value = nv;
         this.de('value', { value: nv });
     }
-    get endPoint() {
-        return this._endPoint;
+    get endpoint() {
+        return this._endpoint;
     }
-    set endPoint(nv) {
-        this.attr(endPoint, nv);
+    set endpoint(nv) {
+        this.attr(endpoint, nv);
     }
     static get observedAttributes() {
-        return super.observedAttributes.concat([endPoint]);
+        return super.observedAttributes.concat([endpoint]);
     }
-    attributeChangedCallback() {
-        throw 'not implemented';
+    attributeChangedCallback(n, ov, nv) {
+        switch (n) {
+            case endpoint:
+                this._endpoint = nv;
+                break;
+        }
     }
     connectedCallback() {
         this.onPropsChange();
@@ -41,15 +45,14 @@ export class XtalSoapElement extends XtalElement {
         return true;
     }
     postMessage() {
-        const requestTemplate = document.createElement('template');
-        this.messageFormatContext.init(this, this.messageFormatContext, requestTemplate);
-        const body = requestTemplate.innerHTML;
+        const requestXML = document.createElement('div');
+        const body = this.messageBuilder(this);
         const headers = new Headers({
             'Content-Type': 'text/xml; charset=utf-8',
             // 'Content-Length': body.length,
             'Access-Control-Allow-Origin': '*',
         });
-        fetch(this._endPoint, {
+        fetch(this._endpoint, {
             method: 'POST',
             headers: headers,
             body: body,
