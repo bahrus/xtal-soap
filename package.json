@@ -1,6 +1,6 @@
 {
   "name": "xtal-soap",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "TBD",
   "main": "xtal-soap-element.js",
   "module": "xtal-soap-element.js",
