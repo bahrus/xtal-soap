@@ -92,8 +92,6 @@ export abstract class XtalSoapElement<TReq> extends XtalElement{
             body: body,
         }).then(resp =>{
             resp.text().then(txt =>{
-                //const tmpl = document.createElement('textarea');
-                //tmpl.innerHTML = txt;
                 const dp = new DOMParser();
                 this.setValue(dp.parseFromString(txt, 'application/xml'));
             })

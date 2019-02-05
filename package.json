@@ -2,8 +2,8 @@
   "name": "xtal-soap",
   "version": "0.0.1",
   "description": "TBD",
-  "main": "xtal-soap",
-  "module": "xtal-soap.js",
+  "main": "xtal-soap-element.js",
+  "module": "xtal-soap-element.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
