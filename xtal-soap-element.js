@@ -46,7 +46,7 @@ export class XtalSoapElement extends XtalElement {
         if (!super.onPropsChange())
             return false;
         const rc = this.renderContext;
-        const esc = this.eventSwitchContext;
+        const esc = this.eventContext;
         if (this.mainTemplate !== undefined) {
             if (esc && esc.eventManager !== undefined) {
                 esc.eventManager(this.root, esc);

@@ -1,13 +1,13 @@
 //import {XtallatX} from 'xtal-latx/xtal-latx.js';
 import {RenderContext, RenderOptions} from 'trans-render/init.d.js';
 import {UpdateContext} from 'trans-render/update.d.js';
-import {EventSwitchContext} from 'event-switch/event-switch.d.js';
+import {EventContext} from 'event-switch/event-switch.d.js';
 import {XtalElement} from 'xtal-element/xtal-element.js';
 
 const endpoint = 'endpoint';
 export abstract class XtalSoapElement extends XtalElement{
     abstract get messageBuilder(): (t: this) => string;
-    abstract get eventSwitchContext(): EventSwitchContext;
+    abstract get eventContext(): EventContext;
     abstract get responseBuilder(): (t: this) => string;    
     _value!: Document;
     get value(){
@@ -60,7 +60,7 @@ export abstract class XtalSoapElement extends XtalElement{
     onPropsChange(){
         if(!super.onPropsChange()) return false;
         const rc = this.renderContext;  
-        const esc = this.eventSwitchContext;
+        const esc = this.eventContext;
         if(this.mainTemplate !== undefined){
             if(esc && esc.eventManager !== undefined){
                 esc.eventManager(this.root, esc);

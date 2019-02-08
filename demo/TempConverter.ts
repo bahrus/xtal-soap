@@ -3,8 +3,7 @@ import { createTemplate } from "xtal-element/utils.js";
 import { init } from "trans-render/init.js";
 import { update } from "trans-render/update.js";
 import { RenderContext } from "trans-render/init.d.js";
-import { addEventListeners } from "event-switch/event-switch.js";
-import { EventSwitchContext } from "event-switch/event-switch.d.js";
+import { newEventContext } from "event-switch/event-switch.js";
 
 const mainTemplate = createTemplate(/* html */ `
 <input name="Fahrenheit">
@@ -13,20 +12,18 @@ const mainTemplate = createTemplate(/* html */ `
 `);
 export class TempConverter extends XtalSoapElement {
   //region
-  _eventSwitchContext = {
-    eventManager: addEventListeners,
-    eventRules: {
-      click: {
-        route: {
-          button: {
-            action: e => this.postMessage()
-          }
+
+  _eventContext = newEventContext({
+    click: {
+      route: {
+        button: {
+          action: e => this.postMessage()
         }
       }
     }
-  } as EventSwitchContext;
-  get eventSwitchContext() {
-    return this._eventSwitchContext;
+  }) 
+  get eventContext() {
+    return this._eventContext;
   }
   //endregion
   get messageBuilder() {
