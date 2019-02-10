@@ -37,7 +37,9 @@ export class XtalSoapElement extends XtalElement {
         const esc = this.eventContext;
         if (this.mainTemplate !== undefined) {
             if (esc && esc.eventManager !== undefined) {
-                esc.eventManager(this.root, esc);
+                if (!this._initialized) {
+                    esc.eventManager(this.root, esc);
+                }
             }
             if (rc && rc.init !== undefined) {
                 if (this._initialized) {
