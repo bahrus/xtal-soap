@@ -1,16 +1,13 @@
 import { XtalSoapElement } from "../xtal-soap-element.js";
-import { createTemplate } from "xtal-element/utils.js";
-import { init } from "trans-render/init.js";
+import { createTemplate, newRenderContext } from "xtal-element/utils.js";
 import { update } from "trans-render/update.js";
 import { newEventContext } from "event-switch/event-switch.js";
 const mainTemplate = createTemplate(/* html */ `
 <input name="Fahrenheit">
 <button>Convert</button>
-<div role="answer"></div>
 `);
 export class TempConverter extends XtalSoapElement {
     constructor() {
-        //region
         super(...arguments);
         this._eventContext = newEventContext({
             click: {
@@ -21,12 +18,7 @@ export class TempConverter extends XtalSoapElement {
                 }
             }
         });
-        this._renderContext = {
-            init: init,
-            Transform: {
-                '[role="answer"]': x => this._response
-            }
-        };
+        this._renderContext = newRenderContext({});
     }
     get eventContext() {
         return this._eventContext;
@@ -44,11 +36,6 @@ export class TempConverter extends XtalSoapElement {
 </soap:Envelope>
 `;
     }
-    get responseBuilder() {
-        return (t) => /* html */ `
-            Celsius: ${t._value.querySelector("FahrenheitToCelsiusResult").textContent}
-        `;
-    }
     get ready() {
         return true;
     }
@@ -62,4 +49,4 @@ export class TempConverter extends XtalSoapElement {
         return this._renderContext;
     }
 }
-customElements.define("temp-converter", TempConverter);
+customElements.define("temp-converter-input", TempConverter);

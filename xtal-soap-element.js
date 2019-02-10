@@ -1,25 +1,13 @@
 import { XtalElement } from 'xtal-element/xtal-element.js';
 const endpoint = 'endpoint';
 export class XtalSoapElement extends XtalElement {
-    constructor() {
-        super(...arguments);
-        this._response = '';
-    }
     get value() {
         return this._value;
     }
     setValue(nv) {
         this._value = nv;
         this.de('value', { value: nv });
-        this.setResponse(this.responseBuilder(this));
-    }
-    get response() {
-        return this._response;
-    }
-    setResponse(nv) {
-        this._response = nv;
-        this.de('response', { response: nv });
-        this.onPropsChange();
+        //this.setResponse(this.responseBuilder(this));
     }
     get endpoint() {
         return this._endpoint;

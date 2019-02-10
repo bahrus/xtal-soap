@@ -7,7 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <temp-converter endpoint="https://cors-anywhere.herokuapp.com/https://www.w3schools.com/xml/tempconvert.asmx"></temp-converter>
-    <script type="module" src="./TempConverter.js"></script>
+    <temp-converter-input endpoint="https://cors-anywhere.herokuapp.com/https://www.w3schools.com/xml/tempconvert.asmx"></temp-converter-input> 
+    <p-d on="value-changed" prop="textContent" val="target.value.querySelector|FahrenheitToCelsiusResult.textContent"></p-d>
+    <span></span>
+    <script type="module" src="./TempConverterInput.js"></script>
+    <script type="module" src="../node_modules/p-d.p-u/p-d.js"></script>
 </body>
 </html>

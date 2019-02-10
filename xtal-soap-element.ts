@@ -8,7 +8,7 @@ const endpoint = 'endpoint';
 export abstract class XtalSoapElement extends XtalElement{
     abstract get messageBuilder(): (t: this) => string;
     abstract get eventContext(): EventContext;
-    abstract get responseBuilder(): (t: this) => string;    
+    //abstract get responseBuilder(): (t: this) => string;    
     _value!: Document;
     get value(){
         return this._value;
@@ -16,18 +16,18 @@ export abstract class XtalSoapElement extends XtalElement{
     setValue(nv: Document){
         this._value = nv;
         this.de('value', {value: nv});
-        this.setResponse(this.responseBuilder(this));
+        //this.setResponse(this.responseBuilder(this));
     }
 
-    _response: String = '';
-    get response(){
-        return this._response;
-    }
-    setResponse(nv: String){
-        this._response = nv;
-        this.de('response', {response: nv});
-        this.onPropsChange();
-    }
+    // _response: String = '';
+    // get response(){
+    //     return this._response;
+    // }
+    // setResponse(nv: String){
+    //     this._response = nv;
+    //     this.de('response', {response: nv});
+    //     this.onPropsChange();
+    // }
 
     _endpoint!: string;
     get endpoint(){
